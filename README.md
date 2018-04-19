@@ -1,2 +1,3 @@
-# Nov21
-Sitio Sorpresa
+# Sistema Solar 
+Computacion Grafica
+Uso de Three.js
