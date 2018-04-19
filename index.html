@@ -1,101 +1,153 @@
-<!doctype <html>
-<head>
-	<meta charset="UTF-8">
-	<title>¡¡ Feliz Cumpleaños !!</title>
-	<link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="css/style.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script src="js/app.js"></script>
-</head>
-<body>
-	<div class="inicio-wrapper">
-		<header>
-			<div class="container">
-				<img src="images/LogoJL.png" alt="Logo J L">
-				<nav>
-					<a href="#inicio" class="active">INICIO</a>
-					<a href="#bdias">BUENOS DÍAS</a>
-					<a href="#video">VIDEO</a>
-					<a href="#carta">CARTA</a>
-					<a href="#tudia">TU DÍA</a>
-				</nav>			
-			</div>
-		</header>
-		<section id="inicio" class="container">
-			<h1>HOY SERÁ UN DÍA MUY ESPECIAL <strong>FELIZ CUMPLEAÑOS LIIS</strong> TE AMAMOS</h1>
-			<div class="divider"></div>
-			<P>Que este no sea un día cualquiera, no te preocupes por lo que va a pasar, solo vívelo, nadie más lo hará por ti. A partir de ahora no se puede decir <strong>NO</strong>.</P>
-		</section>
-	</div>
-	<section id="bdias" class="container">
-		<h2>BUENOS DÍAS</h2>
-		<p>El día de hoy vamos a hacer varias cositas, lo importante es que no tengas miedo, no te preocupes por absolutamente nada. Sin embargo sí hay que tener en cuenta ciertas recomendaciones:</p>
-		<div class="box">
-			<img src="images/smile.png" height="200" alt="sonrisa">
-			<h3>Paso 1</h3>
-			<p>Lleva tu gran sonrisa <strong>siempre</strong> puesta. Sin ella no se te ocurra salir.</p>
-		</div>
-		<div class="box">
-			<img src="images/Vestido.png" alt="Vestido">
-			<h3>Paso 2</h3>
-			<p>Vístete cómoda pero bien linda así como tú sabes.<strong>(semiformal)</strong>.</p>
-		</div>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SISTEMA SOLAR</title>
+    <link rel="stylesheet" href="">
+    <script src="js/three.min.js"></script>
+    <script src="js/OrbitControls.js"></script>
+  </head>
+  <body>    
+    <script>
+		var escena;
+		//crea un ambiente de gráficos
+		var camara;
+		//muestra la posición de un objeto determinado
+		var renderer;
+		var controlCamara;
+		//dibuja los pixeles en pantalla
+		//funcion de configuracion del renderizado
+		function crearRenderer() {
+		renderer = new THREE.WebGLRenderer({alpha: true, antialias : true});
+		renderer.setClearColor(0xffffff,0);
+		renderer.setSize(window.innerWidth, window.innerHeight);
+		renderer.shadowMap.enabled = true;
+		//decirle al renderer que habilite el manejo de sombras
+		}
+		function crearCamara() {
+		camara = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
+		camara.position.x = 0;
+		camara.position.y = 32;
+		camara.position.z = 32;
+		camara.name = 'camara';
+		camara.lookAt(escena.position);
+		controlCamara = new THREE.OrbitControls(camara);
+		// ubicar la camara apuntando al centro del objeto
+		}
+		function crearPlano() {
+		var planoGeometria = new THREE.PlaneGeometry(50, 50)
+		var planoMaterial = new THREE.MeshLambertMaterial({
+		color: 0xcccccc
+		});
+		var plano = new THREE.Mesh(planoGeometria, planoMaterial);
+		plano.receiveShadow = true; // decirle al plano que reciba sombra
+		plano.rotation.x = -0.5 * Math.PI;
+		plano.position.y = -5;
+		escena.add(plano);
+		}
 		
-		<div class="box">
-			<img src="images/Puntual.png" alt="Puntual">
-			<h3>Paso 3</h3>
-			<p>Tal vez el más importante. ¡¡<strong>Sé puntual</strong>!! recuerda que No somos Ciro.</p>
-		</div>
-	</section>
+		function crearNubes (){
+		var esferaGeometria = new THREE.SphereGeometry(10.1,100,100);
+		var nubeTextura = new THREE.Texture();
+		var loader = new THREE.ImageLoader();
+		loader.load('texturas/nubes.png', function(image){
+		nubeTextura.image = image ;
+		nubeTextura.needsUpdate = true ;
+		});
+		var nubeMaterial = new THREE.MeshBasicMaterial();
+		nubeMaterial.map = nubeTextura ;
+		nubeMaterial.transparent = true ;
+		var nube = new THREE.Mesh(esferaGeometria,nubeMaterial);
+		nube.name = 'nubes';
+		nube.position.y = 5;
+		escena.add(nube);
+		}
+		function crearTierra(){
+		var tierraGeometria = new THREE.SphereGeometry(10,100,100);
+		var tierraMaterial = crearMaterialTierra();
+		var tierra = new THREE.Mesh(tierraGeometria, tierraMaterial);
+		tierra.name = 'tierra';
+		tierra.castShadow = true;
+		tierra.position.y = 5;
+		escena.add(tierra);
+		}
 		
-	<section id="video">
-		<video src="images\Video\Nov21Video.mp4" width="640" height="480" controls preload="auto" >
-		</video>
-	</section>
-	<section id="carta" class="container">
-		<h2>CARTA</h2>
-		<div class="box">
-			<img style="display:block;margin:0 auto 0 auto;" src="images/letter4.jpg" width="280" alt="carta1"/>
-			<p>1. Hoy es una fecha muy especial para ti, es un año más de vida, un año más de experiencia y todavía te queda mucho por recorrer. Te deseo todo lo mejor y te lo digo de corazón, muchas bendiciones, que todo sea paz y armonía en tu vida. También debo agradecerte por todo, en verdad aprecio mucho lo que haces por mí. </p>			
-		</div>
-		<div class="box">
-			<img style="display:block;margin:0 auto 0 auto;" src="images/letter1.jpg" width="200" alt="carta2" >
-			<p>2. Este es mi regalo de cumpleaños, aunque tal vez hayan otros más. Este es el regalo que llevo preparando tanto para celebrar contigo. No estoy tan seguro que vayamos a pasar todos nuestros cumpleaños juntos. Pero quiero que este año sea especial. Tendrás regalos, llamadas, copas, una gran torta y te consentiran mucho.</p>
-		</div>
-		<div class="box">
-			<img style="display:block;margin:0 auto 0 auto;" src="images/letter2.jpg" width="200" alt="carta3"/>
-			<p>3. Quiero estar a tu lado cada año en esta fecha. Quiero estar presente todos y cada uno de los años que te esperan, para comprobar cómo va pasando el tiempo, cómo con cada año que cumplas estaremos más unidos, nos conoceremos más, nos comprenderemos más, fortaleceremos esta confianza que tanto nos ha costado. Quiero ver a esta hermosa niña crecer.</p>
-		</div>
-		<div class="box">			
-			<img style="display:block;margin:0 auto 0 auto;" src="images/letter3.jpg" width="200" alt="carta4"/>
-			<p>4. No te preocupes por nada porque hoy no vamos a invitar a la rutina, ni al cruel tiempo que no se detine. Tampoco vamos a invitar a los malentendidos, ni a la indiferencia y mucho menos a los rencores. Hoy la protagonista eres tu. Así que este es mi regalo: un paquete lleno de felicidad, sonrisas y un bello recuerdo para toda la vida.</p>
-		</div>		
-		<h3>¡¡ Feliz Cumpleaños !!</h3>
-		<h3>...No mereces menos...</h3>
-
-	</section>
-	<div class="tudia-wrapper">
-			<section id="tudia" class="container">
-			<h2>TU DÍA</h2>
-			<p>Al fin hemos llegado a la parte que más nos debe interesar. Si ya has llegado aquí quiero agradecerte por tomarte el tiempo de ver algo de lo que hemos preparado para ti y pedirte que aunque mil cosas puedan estar pasando por tu cabeza deja que todo fluya como se supone.</p>
-			<p>De momento quiero que trates de seguir tu día normal pero sin dejar pasar las siguientes cosas:</p>
-			<ul>
-				<li>No salgas de tu casa antes de las 6:45am. (No te costará mucho)</li>
-				<li>No te afanes para llegar a Cajica, llegaremos a tiempo.</li>
-				<li>Alista algo lindo que ponerte en la noche.</li>
-				<li><strong>NO</strong> hagas planes para hoy.</li>
-				<li>Hoy solo estas disponible para tus amig@s.</li>
-				<li>Contesta todas las llamadas.</li>
-				<li>Déjate sorprender.</li>
-				<li>Tomate un tiempo para reflexionar qué has hecho los últimos 21 años y qué quieres hacer los 21 que vienen.</li>
-				<li>Abre tu corazón y disfruta de lo que la vida te prepara.</li>
-			</ul>
-		</section>
-	</div>
-		<footer>
-			© 2010 <strong>Proyecto Noviembre 21</strong>, Todos los Derechos Reservados
-		</footer>
-	</body>
+		function crearMaterialTierra(){
+		var tierraTextura = new THREE.Texture(); // la nueva version de threejs sugiere primero crear un objeto vacio de la textura;
+		var loader = new THREE.ImageLoader(); // carga imagenes js
+		loader.load('texturas/tierra2.jpg', function (image){
+		tierraTextura.image = image; // una vez se carge la textura en memoria se debe asignar la imagen a la textura
+		tierraTextura.needsUpdate = true; //avisa al redner que se requiere actualizar el objeto con textura en la escena
+		}); //la funcion callback recibe un parametro que es la imagen
+		var normalTextura = new THREE.Texture(); // la nueva version de threejs sugiere primero crear un objeto vacio de la textura;
+		var loader = new THREE.ImageLoader(); // carga imagenes js
+		loader.load('texturas/tierranormal.jpg', function(image){
+		normalTextura.image = image; // una vez se carge la textura en memoria se debe asignar la imagen a la textura
+		normalTextura.needsUpdate = true; //avisa al redner que se requiere actualizar el objeto con textura en la escena
+		}); //la funcion callback recibe un parametro que es la imagen
+		
+		
+		// var especularTextura = new THREE.Texture();
+		// var loader = new THREE.ImageLoader();
+		// loader.load('texturas/tierraespecular.jpg', function(image){
+		// especularTextura.image = image;
+		// especularTextura.needsUpdate = true;
+		// });
+		
+		tierraMaterial = new THREE.MeshPhongMaterial();
+		tierraMaterial.map = tierraTextura; // asigno al maping la textura cargada en la memoria
+		
+		tierraMaterial.normalMap = normalTextura ;
+		tierraMaterial.normalScale = new THREE.Vector2( 0.7, 0.7 );
+		// tierraMaterial.especularMap = especularTextura;
+		// tierraMaterial.specular = new THREE.Color(0x262626);
+		return tierraMaterial;
+		}
+		function crearLuz() {
+		var luzDireccional = new THREE.DirectionalLight(0xffffff,1);
+		luzDireccional.position.set(100,100,-50);
+		luzDireccional.name = "luz direccional";
+		escena.add(luzDireccional);
+		var luzAmbiental = new THREE.AmbientLight(0x111111);
+		escena.add(luzAmbiental);
+		}
+		
+		function ejes() {
+		var ejes = new THREE.AxisHelper(30);
+		escena.add(ejes);
+		}
+		//funcion de configuración inicial de la escena
+		function init() {
+		escena = new THREE.Scene();
+		crearRenderer();
+		crearCamara();
+		crearLuz();
+		crearTierra();
+		// crearPlano();
+		crearNubes();
+		// ejes();
+		document.body.appendChild(renderer.domElement);
+		render();
+		}
+		function render() {
+		renderer.render(escena, camara);
+		controlCamara.update();
+		escena.getObjectByName('tierra').rotation.y += 0.0005;
+		escena.getObjectByName('nubes').rotation.y += 0.0007;
+		// escena.getObjectByName('tierra').position.x += 0.01;
+		// escena.getObjectByName('nubes').position.x +=  0.01;
+		// if (escena.getObjectByName('tierra').position.x > 5) {
+		//    escena.getObjectByName('tierra').position.y += 0.5;
+		//    escena.getObjectByName('nubes').position.y +=  0.5;
+		// }
+		// console.log(escena.getObjectByName('nubes').position);
+		
+		
+		//realiza recursion para dibujar cada fotograma.
+		requestAnimationFrame(render);
+		}
+		init();
+	</script>
+  </body>
 </html>
