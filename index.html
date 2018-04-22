@@ -38,7 +38,7 @@
 		function crearPlano() {
 		var planoGeometria = new THREE.PlaneGeometry(50, 50)
 		var planoMaterial = new THREE.MeshLambertMaterial({
-		color: 0xcccccc
+		color: 0x000000
 		});
 		var plano = new THREE.Mesh(planoGeometria, planoMaterial);
 		plano.receiveShadow = true; // decirle al plano que reciba sombra
@@ -63,6 +63,8 @@
 		nube.position.y = 5;
 		escena.add(nube);
 		}
+
+		//TIERRA
 		function crearTierra(){
 		var tierraGeometria = new THREE.SphereGeometry(10,100,100);
 		var tierraMaterial = crearMaterialTierra();
@@ -76,40 +78,133 @@
 		function crearMaterialTierra(){
 		var tierraTextura = new THREE.Texture(); // la nueva version de threejs sugiere primero crear un objeto vacio de la textura;
 		var loader = new THREE.ImageLoader(); // carga imagenes js
-		loader.load('texturas/tierra2.jpg', function (image){
-		tierraTextura.image = image; // una vez se carge la textura en memoria se debe asignar la imagen a la textura
-		tierraTextura.needsUpdate = true; //avisa al redner que se requiere actualizar el objeto con textura en la escena
-		}); //la funcion callback recibe un parametro que es la imagen
+		loader.load('texturas/tierra.jpg', function (image){
+			tierraTextura.image = image; // una vez se carge la textura en memoria se debe asignar la imagen a la textura
+			tierraTextura.needsUpdate = true; //avisa al redner que se requiere actualizar el objeto con textura en la escena
+			}); //la funcion callback recibe un parametro que es la imagen
 		var normalTextura = new THREE.Texture(); // la nueva version de threejs sugiere primero crear un objeto vacio de la textura;
 		var loader = new THREE.ImageLoader(); // carga imagenes js
 		loader.load('texturas/tierranormal.jpg', function(image){
-		normalTextura.image = image; // una vez se carge la textura en memoria se debe asignar la imagen a la textura
-		normalTextura.needsUpdate = true; //avisa al redner que se requiere actualizar el objeto con textura en la escena
-		}); //la funcion callback recibe un parametro que es la imagen
-		
-		
-		// var especularTextura = new THREE.Texture();
-		// var loader = new THREE.ImageLoader();
-		// loader.load('texturas/tierraespecular.jpg', function(image){
-		// especularTextura.image = image;
-		// especularTextura.needsUpdate = true;
-		// });
+			normalTextura.image = image; // una vez se carge la textura en memoria se debe asignar la imagen a la textura
+			normalTextura.needsUpdate = true; //avisa al redner que se requiere actualizar el objeto con textura en la escena
+			}); //la funcion callback recibe un parametro que es la imagen
 		
 		tierraMaterial = new THREE.MeshPhongMaterial();
 		tierraMaterial.map = tierraTextura; // asigno al maping la textura cargada en la memoria
-		
 		tierraMaterial.normalMap = normalTextura ;
 		tierraMaterial.normalScale = new THREE.Vector2( 0.7, 0.7 );
-		// tierraMaterial.especularMap = especularTextura;
-		// tierraMaterial.specular = new THREE.Color(0x262626);
+
 		return tierraMaterial;
 		}
+
+		//Marte
+		function crearMarte(){
+		var marteGeometria = new THREE.SphereGeometry(8,100,100);
+		var marteMaterial = crearMaterialMarte();
+		var marte = new THREE.Mesh(marteGeometria, marteMaterial);
+		marte.name = 'marte';
+		marte.castShadow = true;
+		marte.position.y = 5;
+		marte.position.x = 20;
+		escena.add(marte);
+		}
+		
+		function crearMaterialMarte(){
+		var marteTextura = new THREE.Texture(); // la nueva version de threejs sugiere primero crear un objeto vacio de la textura;
+		var loader = new THREE.ImageLoader(); // carga imagenes js
+		loader.load('texturas/marte.jpg', function (image){
+			marteTextura.image = image; // una vez se carge la textura en memoria se debe asignar la imagen a la textura
+			marteTextura.needsUpdate = true; //avisa al redner que se requiere actualizar el objeto con textura en la escena
+			}); //la funcion callback recibe un parametro que es la imagen
+		var normalTextura = new THREE.Texture(); // la nueva version de threejs sugiere primero crear un objeto vacio de la textura;
+		var loader = new THREE.ImageLoader(); // carga imagenes js
+		loader.load('texturas/martenormal.jpg', function(image){
+			normalTextura.image = image; // una vez se carge la textura en memoria se debe asignar la imagen a la textura
+			normalTextura.needsUpdate = true; //avisa al redner que se requiere actualizar el objeto con textura en la escena
+			}); //la funcion callback recibe un parametro que es la imagen
+		
+		marteMaterial = new THREE.MeshPhongMaterial();
+		marteMaterial.map = marteTextura; // asigno al maping la textura cargada en la memoria
+		marteMaterial.normalMap = normalTextura ;
+		marteMaterial.normalScale = new THREE.Vector2( 0.7, 0.7 );
+
+		return marteMaterial;
+		}
+
+		//VENUS
+		function crearVenus(){
+		var venusGeometria = new THREE.SphereGeometry(10,100,100);
+		var venusMaterial = crearMaterialVenus();
+		var venus = new THREE.Mesh(venusGeometria, venusMaterial);
+		venus.name = 'venus';
+		venus.castShadow = true;
+		venus.position.y = 5;
+		venus.position.x = -20;
+		escena.add(venus);
+		}
+		
+		function crearMaterialVenus(){
+		var venusTextura = new THREE.Texture(); // la nueva version de threejs sugiere primero crear un objeto vacio de la textura;
+		var loader = new THREE.ImageLoader(); // carga imagenes js
+		loader.load('texturas/venus.jpg', function (image){
+			venusTextura.image = image; // una vez se carge la textura en memoria se debe asignar la imagen a la textura
+			venusTextura.needsUpdate = true; //avisa al redner que se requiere actualizar el objeto con textura en la escena
+			}); //la funcion callback recibe un parametro que es la imagen
+		var normalTextura = new THREE.Texture(); // la nueva version de threejs sugiere primero crear un objeto vacio de la textura;
+		var loader = new THREE.ImageLoader(); // carga imagenes js
+		// loader.load('texturas/venusnormal.jpg', function(image){
+		// 	normalTextura.image = image; // una vez se carge la textura en memoria se debe asignar la imagen a la textura
+		// 	normalTextura.needsUpdate = true; //avisa al redner que se requiere actualizar el objeto con textura en la escena
+		// 	}); //la funcion callback recibe un parametro que es la imagen
+		
+		venusMaterial = new THREE.MeshPhongMaterial();
+		venusMaterial.map = venusTextura; // asigno al maping la textura cargada en la memoria
+		// venusMaterial.normalMap = normalTextura ;
+		// venusMaterial.normalScale = new THREE.Vector2( 0.7, 0.7 );
+
+		return venusMaterial;
+		}
+
+		//JUPITER
+		function crearJupiter(){
+		var jupiterGeometria = new THREE.SphereGeometry(30,100,100);
+		var jupiterMaterial = crearMaterialJupiter();
+		var jupiter = new THREE.Mesh(jupiterGeometria, jupiterMaterial);
+		jupiter.name = 'jupiter';
+		jupiter.castShadow = true;
+		jupiter.position.y = 5;
+		jupiter.position.x = 60;
+		escena.add(jupiter);
+		}
+		
+		function crearMaterialJupiter(){
+		var jupiterTextura = new THREE.Texture(); // la nueva version de threejs sugiere primero crear un objeto vacio de la textura;
+		var loader = new THREE.ImageLoader(); // carga imagenes js
+		loader.load('texturas/jupiter.jpg', function (image){
+			jupiterTextura.image = image; // una vez se carge la textura en memoria se debe asignar la imagen a la textura
+			jupiterTextura.needsUpdate = true; //avisa al redner que se requiere actualizar el objeto con textura en la escena
+			}); //la funcion callback recibe un parametro que es la imagen
+		// var normalTextura = new THREE.Texture(); // la nueva version de threejs sugiere primero crear un objeto vacio de la textura;
+		// var loader = new THREE.ImageLoader(); // carga imagenes js
+		// loader.load('texturas/jupiternormal.jpg', function(image){
+		// 	normalTextura.image = image; // una vez se carge la textura en memoria se debe asignar la imagen a la textura
+		// 	normalTextura.needsUpdate = true; //avisa al redner que se requiere actualizar el objeto con textura en la escena
+		// 	}); //la funcion callback recibe un parametro que es la imagen
+		
+		jupiterMaterial = new THREE.MeshPhongMaterial();
+		jupiterMaterial.map = jupiterTextura; // asigno al maping la textura cargada en la memoria
+		// jupiterMaterial.normalMap = normalTextura ;
+		// jupiterMaterial.normalScale = new THREE.Vector2( 0.7, 0.7 );
+
+		return jupiterMaterial;
+		}
+		//LUZ Y EJE
 		function crearLuz() {
 		var luzDireccional = new THREE.DirectionalLight(0xffffff,1);
-		luzDireccional.position.set(100,100,-50);
+		luzDireccional.position.set(50,50,-40);
 		luzDireccional.name = "luz direccional";
 		escena.add(luzDireccional);
-		var luzAmbiental = new THREE.AmbientLight(0x111111);
+		var luzAmbiental = new THREE.AmbientLight(0x111111,9);
 		escena.add(luzAmbiental);
 		}
 		
@@ -123,9 +218,13 @@
 		crearRenderer();
 		crearCamara();
 		crearLuz();
+		//PLANETAS
+		crearMarte();
+		crearVenus();
 		crearTierra();
-		// crearPlano();
+		crearPlano();
 		crearNubes();
+		crearJupiter();
 		// ejes();
 		document.body.appendChild(renderer.domElement);
 		render();
@@ -133,8 +232,11 @@
 		function render() {
 		renderer.render(escena, camara);
 		controlCamara.update();
+		escena.getObjectByName('venus').rotation.y -= 0.0006;
+		escena.getObjectByName('marte').rotation.y += 0.0006;
 		escena.getObjectByName('tierra').rotation.y += 0.0005;
 		escena.getObjectByName('nubes').rotation.y += 0.0007;
+		escena.getObjectByName('jupiter').rotation.y += 0.0004;
 		// escena.getObjectByName('tierra').position.x += 0.01;
 		// escena.getObjectByName('nubes').position.x +=  0.01;
 		// if (escena.getObjectByName('tierra').position.x > 5) {
