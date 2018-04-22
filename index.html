@@ -96,7 +96,7 @@
 
 		return tierraMaterial;
 		}
-	    
+
 		//MERCURIO
 		function crearMercurio(){
 		var mercurioGeometria = new THREE.SphereGeometry(6,100,100);
@@ -130,7 +130,7 @@
 
 		return mercurioMaterial;
 		}
-	    
+
 		//Marte
 		function crearMarte(){
 		var marteGeometria = new THREE.SphereGeometry(8,100,100);
@@ -195,7 +195,7 @@
 		venusMaterial.map = venusTextura; // asigno al maping la textura cargada en la memoria
 		// venusMaterial.normalMap = normalTextura ;
 		// venusMaterial.normalScale = new THREE.Vector2( 0.7, 0.7 );
-
+		
 		return venusMaterial;
 		}
 
@@ -232,8 +232,8 @@
 
 		return jupiterMaterial;
 		}
-	    
-	    	//Urano
+
+		//Urano
 		function crearUrano(){
 		var uranoGeometria = new THREE.SphereGeometry(12,100,100);
 		var uranoMaterial = crearMaterialUrano();
@@ -266,7 +266,8 @@
 
 		return uranoMaterial;
 		}
-	    
+
+
 		//LUZ Y EJE
 		function crearLuz() {
 		var luzDireccional = new THREE.DirectionalLight(0xffffff,1);
@@ -292,22 +293,28 @@
 		crearMarte();
 		crearVenus();
 		crearTierra();
-		crearPlano();
 		crearNubes();
 		crearJupiter();
 		crearUrano();
+
 		// ejes();
+		// crearPlano();
+
 		document.body.appendChild(renderer.domElement);
 		render();
 		}
 		function render() {
 		renderer.render(escena, camara);
 		controlCamara.update();
+		
+		escena.getObjectByName('mercurio').rotation.y += 0.0009;
 		escena.getObjectByName('venus').rotation.y -= 0.0006;
 		escena.getObjectByName('marte').rotation.y += 0.0006;
 		escena.getObjectByName('tierra').rotation.y += 0.0005;
 		escena.getObjectByName('nubes').rotation.y += 0.0007;
-		escena.getObjectByName('jupiter').rotation.y += 0.0004;
+		escena.getObjectByName('jupiter').rotation.y += 0.0005;
+		escena.getObjectByName('urano').rotation.y += 0.0006;
+
 		// escena.getObjectByName('tierra').position.x += 0.01;
 		// escena.getObjectByName('nubes').position.x +=  0.01;
 		// if (escena.getObjectByName('tierra').position.x > 5) {
