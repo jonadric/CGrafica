@@ -28,8 +28,8 @@
 		function crearCamara() {
 		camara = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
 		camara.position.x = 0;
-		camara.position.y = 32;
-		camara.position.z = 32;
+		camara.position.y = 60;
+		camara.position.z = 60;
 		camara.name = 'camara';
 		camara.lookAt(escena.position);
 		controlCamara = new THREE.OrbitControls(camara);
@@ -96,7 +96,41 @@
 
 		return tierraMaterial;
 		}
+	    
+		//MERCURIO
+		function crearMercurio(){
+		var mercurioGeometria = new THREE.SphereGeometry(6,100,100);
+		var mercurioMaterial = crearMaterialMercurio();
+		var mercurio = new THREE.Mesh(mercurioGeometria, mercurioMaterial);
+		mercurio.name = 'mercurio';
+		mercurio.castShadow = true;
+		mercurio.position.y = 5;
+		mercurio.position.x = -40;
+		escena.add(mercurio);
+		}
+		
+		function crearMaterialMercurio(){
+		var mercurioTextura = new THREE.Texture(); // la nueva version de threejs sugiere primero crear un objeto vacio de la textura;
+		var loader = new THREE.ImageLoader(); // carga imagenes js
+		loader.load('texturas/mercurio.jpg', function (image){
+			mercurioTextura.image = image; // una vez se carge la textura en memoria se debe asignar la imagen a la textura
+			mercurioTextura.needsUpdate = true; //avisa al redner que se requiere actualizar el objeto con textura en la escena
+			}); //la funcion callback recibe un parametro que es la imagen
+		var normalTextura = new THREE.Texture(); // la nueva version de threejs sugiere primero crear un objeto vacio de la textura;
+		var loader = new THREE.ImageLoader(); // carga imagenes js
+		// loader.load('texturas/mercurionormal.jpg', function(image){
+		// 	normalTextura.image = image; // una vez se carge la textura en memoria se debe asignar la imagen a la textura
+		// 	normalTextura.needsUpdate = true; //avisa al redner que se requiere actualizar el objeto con textura en la escena
+		// 	}); //la funcion callback recibe un parametro que es la imagen
+		
+		mercurioMaterial = new THREE.MeshPhongMaterial();
+		mercurioMaterial.map = mercurioTextura; // asigno al maping la textura cargada en la memoria
+		// mercurioMaterial.normalMap = normalTextura ;
+		//mercurioMaterial.normalScale = new THREE.Vector2( 0.7, 0.7 );
 
+		return mercurioMaterial;
+		}
+	    
 		//Marte
 		function crearMarte(){
 		var marteGeometria = new THREE.SphereGeometry(8,100,100);
@@ -198,6 +232,41 @@
 
 		return jupiterMaterial;
 		}
+	    
+	    	//Urano
+		function crearUrano(){
+		var uranoGeometria = new THREE.SphereGeometry(12,100,100);
+		var uranoMaterial = crearMaterialUrano();
+		var urano = new THREE.Mesh(uranoGeometria, uranoMaterial);
+		urano.name = 'urano';
+		urano.castShadow = true;
+		urano.position.y = 5;
+		urano.position.x = 120;
+		escena.add(urano);
+		}
+		
+		function crearMaterialUrano(){
+		var uranoTextura = new THREE.Texture(); // la nueva version de threejs sugiere primero crear un objeto vacio de la textura;
+		var loader = new THREE.ImageLoader(); // carga imagenes js
+		loader.load('texturas/urano.jpg', function (image){
+			uranoTextura.image = image; // una vez se carge la textura en memoria se debe asignar la imagen a la textura
+			uranoTextura.needsUpdate = true; //avisa al redner que se requiere actualizar el objeto con textura en la escena
+			}); //la funcion callback recibe un parametro que es la imagen
+		var normalTextura = new THREE.Texture(); // la nueva version de threejs sugiere primero crear un objeto vacio de la textura;
+		var loader = new THREE.ImageLoader(); // carga imagenes js
+		// loader.load('texturas/uranonormal.jpg', function(image){
+		// 	normalTextura.image = image; // una vez se carge la textura en memoria se debe asignar la imagen a la textura
+		// 	normalTextura.needsUpdate = true; //avisa al redner que se requiere actualizar el objeto con textura en la escena
+		// 	}); //la funcion callback recibe un parametro que es la imagen
+		
+		uranoMaterial = new THREE.MeshPhongMaterial();
+		uranoMaterial.map = uranoTextura; // asigno al maping la textura cargada en la memoria
+		// uranoMaterial.normalMap = normalTextura ;
+		// uranoMaterial.normalScale = new THREE.Vector2( 0.7, 0.7 );
+
+		return uranoMaterial;
+		}
+	    
 		//LUZ Y EJE
 		function crearLuz() {
 		var luzDireccional = new THREE.DirectionalLight(0xffffff,1);
@@ -219,12 +288,14 @@
 		crearCamara();
 		crearLuz();
 		//PLANETAS
+		crearMercurio();
 		crearMarte();
 		crearVenus();
 		crearTierra();
 		crearPlano();
 		crearNubes();
 		crearJupiter();
+		crearUrano();
 		// ejes();
 		document.body.appendChild(renderer.domElement);
 		render();
